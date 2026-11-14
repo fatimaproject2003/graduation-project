@@ -3,13 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>مشروع التخرج</title>
+  <title>Real-Time Cloud-Native Multiplayer Quiz Platform</title>
+  <meta name="description" content="مشروع تخرج: فاطمة عبدالله عبدالعالي، بإشراف د. وفاء شاكر محمد">
   <style>
     :root {
       --bg: #f6f7f9;
       --card: #ffffff;
       --text: #1d2330;
       --muted: #5c6577;
+      --value: #2c4a7c;
       --accent: #f57c00;
       --ok: #1e8e3e;
       --border: #e3e6eb;
@@ -20,6 +22,7 @@
         --card: #1b2029;
         --text: #e8ebf0;
         --muted: #9aa3b2;
+        --value: #8fb3ec;
         --accent: #ffa040;
         --ok: #4cc26b;
         --border: #2a313d;
@@ -39,21 +42,46 @@
     }
     main {
       width: 100%;
-      max-width: 560px;
+      max-width: 640px;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 32px 28px;
     }
-    h1 { margin: 0 0 4px; font-size: 1.75rem; }
-    .sub { margin: 0 0 24px; color: var(--muted); }
+    .kicker {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      text-align: center;
+    }
+    h1 {
+      margin: 0 0 28px;
+      font-size: 1.5rem;
+      line-height: 1.4;
+      text-align: center;
+      direction: ltr;
+      text-wrap: balance;
+    }
+    .info { margin: 0 0 28px; }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      padding: 14px 4px;
+      border-top: 1px solid var(--border);
+    }
+    .row:last-child { border-bottom: 1px solid var(--border); }
+    .row dt { color: var(--muted); font-size: 1.05rem; }
+    .row dd { margin: 0; color: var(--value); font-weight: 700; font-size: 1.1rem; }
+    h2 { margin: 0 0 4px; font-size: 1.05rem; }
     ul { list-style: none; padding: 0; margin: 0; }
     li {
       display: flex;
       gap: 10px;
       align-items: baseline;
-      padding: 10px 0;
-      border-top: 1px solid var(--border);
+      padding: 8px 0;
+      font-size: 0.95rem;
     }
     li::before { content: "✔"; color: var(--ok); font-weight: 700; }
     code {
@@ -63,13 +91,21 @@
       font-size: 0.9em;
       color: var(--accent);
     }
-    footer { margin-top: 24px; color: var(--muted); font-size: 0.9rem; }
+    footer { margin-top: 20px; color: var(--muted); font-size: 0.85rem; text-align: center; }
   </style>
 </head>
 <body>
   <main>
-    <h1>مشروع التخرج</h1>
-    <p class="sub">الأسبوع الأول: البيئة والسحابة</p>
+    <p class="kicker">مشروع تخرج</p>
+    <h1>Real-Time Cloud-Native Multiplayer Quiz Platform Utilizing Serverless Architecture and Auto-Scaling</h1>
+
+    <dl class="info">
+      <div class="row"><dt>إعداد الطالبة</dt><dd>فاطمة عبدالله عبدالعالي</dd></div>
+      <div class="row"><dt>المرحلة</dt><dd>الرابعة</dd></div>
+      <div class="row"><dt>بإشراف</dt><dd>د. وفاء شاكر محمد</dd></div>
+    </dl>
+
+    <h2>الأسبوع الأول: البيئة والسحابة</h2>
     <ul>
       <li>تم تثبيت Node.js و Firebase CLI</li>
       <li>تم إنشاء مشروع Firebase: <code>graduation-project-a0d1e</code></li>
