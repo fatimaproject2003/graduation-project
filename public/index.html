@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>مشروع التخرج</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --card: #ffffff;
+      --text: #1d2330;
+      --muted: #5c6577;
+      --accent: #f57c00;
+      --ok: #1e8e3e;
+      --border: #e3e6eb;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #12151b;
+        --card: #1b2029;
+        --text: #e8ebf0;
+        --muted: #9aa3b2;
+        --accent: #ffa040;
+        --ok: #4cc26b;
+        --border: #2a313d;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px 16px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+      line-height: 1.7;
+    }
+    main {
+      width: 100%;
+      max-width: 560px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 28px;
+    }
+    h1 { margin: 0 0 4px; font-size: 1.75rem; }
+    .sub { margin: 0 0 24px; color: var(--muted); }
+    ul { list-style: none; padding: 0; margin: 0; }
+    li {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      padding: 10px 0;
+      border-top: 1px solid var(--border);
+    }
+    li::before { content: "✔"; color: var(--ok); font-weight: 700; }
+    code {
+      direction: ltr;
+      unicode-bidi: embed;
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 0.9em;
+      color: var(--accent);
+    }
+    footer { margin-top: 24px; color: var(--muted); font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>مشروع التخرج</h1>
+    <p class="sub">الأسبوع الأول: البيئة والسحابة</p>
+    <ul>
+      <li>تم تثبيت Node.js و Firebase CLI</li>
+      <li>تم إنشاء مشروع Firebase: <code>graduation-project-a0d1e</code></li>
+      <li>المستودع على GitHub مرتبط بـ Firebase عبر GitHub Actions</li>
+      <li>أي تحديث يُرفع إلى فرع <code>main</code> يُنشر تلقائياً على هذه الصفحة</li>
+    </ul>
+    <footer>Firebase Hosting · GitHub Actions</footer>
+  </main>
+</body>
+</html>
