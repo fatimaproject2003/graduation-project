@@ -62,18 +62,15 @@
       direction: ltr;
       text-wrap: balance;
     }
-    .info { margin: 0 0 28px; }
-    .row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 16px;
-      padding: 14px 4px;
-      border-top: 1px solid var(--border);
+    .info {
+      margin: 0 0 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
     }
-    .row:last-child { border-bottom: 1px solid var(--border); }
-    .row dt { color: var(--muted); font-size: 1.05rem; }
-    .row dd { margin: 0; color: var(--value); font-weight: 700; font-size: 1.1rem; }
+    .info p { margin: 0 0 8px; font-size: 1.1rem; }
+    .info .label { color: var(--muted); }
+    .info .value { color: var(--value); font-weight: 700; }
     h2 { margin: 0 0 4px; font-size: 1.05rem; }
     ul { list-style: none; padding: 0; margin: 0; }
     li {
@@ -99,11 +96,11 @@
     <p class="kicker">مشروع تخرج</p>
     <h1>Real-Time Cloud-Native Multiplayer Quiz Platform Utilizing Serverless Architecture and Auto-Scaling</h1>
 
-    <dl class="info">
-      <div class="row"><dt>إعداد الطالبة</dt><dd>فاطمة عبدالله عبدالعالي</dd></div>
-      <div class="row"><dt>المرحلة</dt><dd>الرابعة</dd></div>
-      <div class="row"><dt>بإشراف</dt><dd>د. وفاء شاكر محمد</dd></div>
-    </dl>
+    <div class="info">
+      <p><span class="label">إعداد الطالبة :</span> <span class="value">فاطمة عبدالله عبدالعالي</span></p>
+      <p><span class="label">المرحلة :</span> <span class="value">الرابعة</span></p>
+      <p><span class="label">بإشراف :</span> <span class="value">د. وفاء شاكر محمد</span></p>
+    </div>
 
     <h2>الأسبوع الأول: البيئة والسحابة</h2>
     <ul>
