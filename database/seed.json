@@ -1,0 +1,170 @@
+{
+  "categories": {
+    "cloud": { "name": "الحوسبة السحابية", "nameEn": "Cloud Computing", "order": 1 },
+    "programming": { "name": "البرمجة", "nameEn": "Programming", "order": 2 },
+    "networks": { "name": "الشبكات", "nameEn": "Networks", "order": 3 },
+    "databases": { "name": "قواعد البيانات", "nameEn": "Databases", "order": 4 }
+  },
+  "questions": {
+    "q01": {
+      "categoryId": "cloud",
+      "text": "ما المقصود بالحوسبة بدون خادم (Serverless)؟",
+      "options": ["تشغيل الكود دون أن يدير المطوّر الخوادم بنفسه", "تشغيل التطبيق بدون اتصال بالإنترنت", "عدم وجود أي خوادم فعلياً", "استخدام الحاسوب الشخصي كخادم"],
+      "difficulty": "medium", "timeLimitSec": 20, "createdAt": 1795358000000
+    },
+    "q02": {
+      "categoryId": "cloud",
+      "text": "أي نموذج خدمة سحابية يوفر بيئة جاهزة لتشغيل التطبيقات دون إدارة نظام التشغيل؟",
+      "options": ["IaaS", "PaaS", "SaaS", "DaaS"],
+      "difficulty": "medium", "timeLimitSec": 20, "createdAt": 1795358000000
+    },
+    "q03": {
+      "categoryId": "cloud",
+      "text": "ماذا تعني خاصية التوسع التلقائي (Auto-Scaling)؟",
+      "options": ["نسخ البيانات احتياطياً كل يوم", "تكبير حجم واجهة التطبيق", "ضغط الملفات تلقائياً", "زيادة الموارد أو تقليلها تلقائياً حسب الحمل"],
+      "difficulty": "easy", "timeLimitSec": 15, "createdAt": 1795358000000
+    },
+    "q04": {
+      "categoryId": "cloud",
+      "text": "أي من المنصات التالية تقدمها شركة Google؟",
+      "options": ["Azure", "AWS Lambda", "Heroku", "Firebase"],
+      "difficulty": "easy", "timeLimitSec": 15, "createdAt": 1795358000000
+    },
+    "q05": {
+      "categoryId": "cloud",
+      "text": "خدمة Gmail مثال على أي نموذج من نماذج الخدمات السحابية؟",
+      "options": ["IaaS", "PaaS", "SaaS", "FaaS"],
+      "difficulty": "easy", "timeLimitSec": 15, "createdAt": 1795358000000
+    },
+    "q06": {
+      "categoryId": "programming",
+      "text": "ما ناتج التعبير 3 + 2 * 4 في معظم لغات البرمجة؟",
+      "options": ["20", "11", "14", "24"],
+      "difficulty": "easy", "timeLimitSec": 15, "createdAt": 1795358000000
+    },
+    "q07": {
+      "categoryId": "programming",
+      "text": "أي هيكل بيانات يعمل بمبدأ آخر من يدخل أول من يخرج (LIFO)؟",
+      "options": ["الطابور (Queue)", "المكدس (Stack)", "المصفوفة (Array)", "الشجرة (Tree)"],
+      "difficulty": "easy", "timeLimitSec": 15, "createdAt": 1795358000000
+    },
+    "q08": {
+      "categoryId": "programming",
+      "text": "ما التعقيد الزمني للبحث الثنائي (Binary Search) في مصفوفة مرتبة؟",
+      "options": ["O(n)", "O(n²)", "O(log n)", "O(1)"],
+      "difficulty": "medium", "timeLimitSec": 20, "createdAt": 1795358000000
+    },
+    "q09": {
+      "categoryId": "programming",
+      "text": "ما صيغة البيانات التي تخزن بها Firebase Realtime Database بياناتها؟",
+      "options": ["XML", "CSV", "JSON", "YAML"],
+      "difficulty": "easy", "timeLimitSec": 15, "createdAt": 1795358000000
+    },
+    "q10": {
+      "categoryId": "programming",
+      "text": "في JavaScript، ما الكلمة التي تعرّف متغيراً لا يمكن إعادة إسناد قيمته؟",
+      "options": ["var", "let", "const", "static"],
+      "difficulty": "medium", "timeLimitSec": 20, "createdAt": 1795358000000
+    },
+    "q11": {
+      "categoryId": "networks",
+      "text": "ما البروتوكول الذي يحوّل أسماء النطاقات إلى عناوين IP؟",
+      "options": ["DHCP", "DNS", "FTP", "SMTP"],
+      "difficulty": "easy", "timeLimitSec": 15, "createdAt": 1795358000000
+    },
+    "q12": {
+      "categoryId": "networks",
+      "text": "ما رقم المنفذ الافتراضي لبروتوكول HTTPS؟",
+      "options": ["80", "21", "443", "8080"],
+      "difficulty": "medium", "timeLimitSec": 20, "createdAt": 1795358000000
+    },
+    "q13": {
+      "categoryId": "networks",
+      "text": "أي بروتوكول يوفر اتصالاً مستمراً بالاتجاهين بين المتصفح والخادم ويُستخدم في التطبيقات اللحظية؟",
+      "options": ["FTP", "SMTP", "ARP", "WebSocket"],
+      "difficulty": "hard", "timeLimitSec": 30, "createdAt": 1795358000000
+    },
+    "q14": {
+      "categoryId": "networks",
+      "text": "كم عدد البتات في عنوان IPv4؟",
+      "options": ["32", "64", "128", "16"],
+      "difficulty": "medium", "timeLimitSec": 20, "createdAt": 1795358000000
+    },
+    "q15": {
+      "categoryId": "networks",
+      "text": "في أي طبقة من نموذج OSI يعمل بروتوكول TCP؟",
+      "options": ["طبقة الشبكة", "طبقة النقل", "طبقة التطبيقات", "طبقة ربط البيانات"],
+      "difficulty": "medium", "timeLimitSec": 20, "createdAt": 1795358000000
+    },
+    "q16": {
+      "categoryId": "databases",
+      "text": "ما نوع قاعدة بيانات Firebase Realtime Database؟",
+      "options": ["NoSQL تخزن البيانات كشجرة JSON", "علائقية (SQL)", "قاعدة بيانات رسومية (Graph)", "جداول بيانات Excel"],
+      "difficulty": "easy", "timeLimitSec": 15, "createdAt": 1795358000000
+    },
+    "q17": {
+      "categoryId": "databases",
+      "text": "ما وظيفة المفتاح الأساسي (Primary Key) في الجدول؟",
+      "options": ["تحديد كل سجل بشكل فريد", "تشفير الجدول", "ترتيب الأعمدة أبجدياً", "حذف السجلات المكررة تلقائياً"],
+      "difficulty": "easy", "timeLimitSec": 15, "createdAt": 1795358000000
+    },
+    "q18": {
+      "categoryId": "databases",
+      "text": "أي أمر في SQL يُستخدم لاسترجاع البيانات من جدول؟",
+      "options": ["INSERT", "UPDATE", "DELETE", "SELECT"],
+      "difficulty": "easy", "timeLimitSec": 15, "createdAt": 1795358000000
+    },
+    "q19": {
+      "categoryId": "databases",
+      "text": "في قواعد أمان Firebase، ماذا تعني القاعدة \".read\": \"auth != null\"؟",
+      "options": ["يمكن لأي شخص القراءة", "القراءة مسموحة للمستخدمين المسجّلين فقط", "القراءة ممنوعة على الجميع", "القراءة للمشرفين فقط"],
+      "difficulty": "medium", "timeLimitSec": 20, "createdAt": 1795358000000
+    },
+    "q20": {
+      "categoryId": "databases",
+      "text": "ما الفائدة الأساسية من الفهرسة (Indexing) في قواعد البيانات؟",
+      "options": ["تسريع عمليات البحث والاستعلام", "تقليل حجم البيانات إلى النصف", "منع حذف البيانات", "تشفير البيانات"],
+      "difficulty": "medium", "timeLimitSec": 20, "createdAt": 1795358000000
+    }
+  },
+  "answerKeys": {
+    "q01": { "correctIndex": 0 },
+    "q02": { "correctIndex": 1 },
+    "q03": { "correctIndex": 3 },
+    "q04": { "correctIndex": 3 },
+    "q05": { "correctIndex": 2 },
+    "q06": { "correctIndex": 1 },
+    "q07": { "correctIndex": 1 },
+    "q08": { "correctIndex": 2 },
+    "q09": { "correctIndex": 2 },
+    "q10": { "correctIndex": 2 },
+    "q11": { "correctIndex": 1 },
+    "q12": { "correctIndex": 2 },
+    "q13": { "correctIndex": 3 },
+    "q14": { "correctIndex": 0 },
+    "q15": { "correctIndex": 1 },
+    "q16": { "correctIndex": 0 },
+    "q17": { "correctIndex": 0 },
+    "q18": { "correctIndex": 3 },
+    "q19": { "correctIndex": 1 },
+    "q20": { "correctIndex": 0 }
+  },
+  "rooms": {
+    "demo-room": {
+      "code": "QUIZ01",
+      "hostUid": "demo-host",
+      "status": "waiting",
+      "createdAt": 1795358000000,
+      "settings": { "categoryId": "cloud", "questionCount": 5, "timePerQuestionSec": 20 },
+      "questionIds": ["q01", "q02", "q03", "q04", "q05"]
+    }
+  },
+  "roomCodes": {
+    "QUIZ01": "demo-room"
+  },
+  "roomPlayers": {
+    "demo-room": {
+      "demo-host": { "name": "فاطمة", "score": 0, "joinedAt": 1795358000000, "online": false }
+    }
+  }
+}

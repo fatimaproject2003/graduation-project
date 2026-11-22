@@ -1,0 +1,122 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "admins": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid"
+      }
+    },
+
+    "categories": {
+      ".read": "auth != null",
+      "$categoryId": {
+        ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
+        ".validate": "newData.hasChildren(['name', 'nameEn', 'order'])",
+        "name": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 50" },
+        "nameEn": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 50" },
+        "order": { ".validate": "newData.isNumber()" },
+        "$other": { ".validate": false }
+      }
+    },
+
+    "questions": {
+      ".read": "auth != null",
+      ".indexOn": ["categoryId", "difficulty"],
+      "$questionId": {
+        ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
+        ".validate": "newData.hasChildren(['categoryId', 'text', 'options', 'difficulty', 'timeLimitSec', 'createdAt'])",
+        "categoryId": { ".validate": "newData.isString() && newData.parent().parent().parent().child('categories').child(newData.val()).exists()" },
+        "text": { ".validate": "newData.isString() && newData.val().length >= 5 && newData.val().length <= 300" },
+        "options": {
+          ".validate": "newData.hasChildren(['0', '1', '2', '3'])",
+          "$i": { ".validate": "($i === '0' || $i === '1' || $i === '2' || $i === '3') && newData.isString() && newData.val().length > 0 && newData.val().length <= 120" }
+        },
+        "difficulty": { ".validate": "newData.val() === 'easy' || newData.val() === 'medium' || newData.val() === 'hard'" },
+        "timeLimitSec": { ".validate": "newData.isNumber() && newData.val() >= 5 && newData.val() <= 60" },
+        "createdAt": { ".validate": "newData.isNumber() && newData.val() <= now" },
+        "$other": { ".validate": false }
+      }
+    },
+
+    "answerKeys": {
+      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      "$questionId": {
+        ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
+        ".validate": "newData.hasChildren(['correctIndex'])",
+        "correctIndex": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 3" },
+        "$other": { ".validate": false }
+      }
+    },
+
+    "rooms": {
+      "$roomId": {
+        ".read": "auth != null",
+        ".write": "auth != null && ((!data.exists() && newData.child('hostUid').val() === auth.uid) || (data.exists() && data.child('hostUid').val() === auth.uid) || root.child('admins').child(auth.uid).val() === true)",
+        ".validate": "newData.hasChildren(['code', 'hostUid', 'status', 'createdAt', 'settings'])",
+        "code": { ".validate": "newData.isString() && newData.val().matches(/^[A-Z0-9]{6}$/) && (!data.exists() || newData.val() === data.val())" },
+        "hostUid": { ".validate": "newData.isString() && (!data.exists() || newData.val() === data.val())" },
+        "status": { ".validate": "newData.val() === 'waiting' || newData.val() === 'playing' || newData.val() === 'finished'" },
+        "createdAt": { ".validate": "(!data.exists() && newData.val() === now) || newData.val() === data.val()" },
+        "settings": {
+          ".validate": "newData.hasChildren(['categoryId', 'questionCount', 'timePerQuestionSec'])",
+          "categoryId": { ".validate": "newData.isString() && root.child('categories').child(newData.val()).exists()" },
+          "questionCount": { ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 20" },
+          "timePerQuestionSec": { ".validate": "newData.isNumber() && newData.val() >= 5 && newData.val() <= 60" },
+          "$other": { ".validate": false }
+        },
+        "questionIds": {
+          "$index": { ".validate": "newData.isString() && root.child('questions').child(newData.val()).exists()" }
+        },
+        "current": {
+          ".validate": "newData.hasChildren(['index', 'questionId', 'startedAt'])",
+          "index": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() < 20" },
+          "questionId": { ".validate": "newData.isString() && newData.parent().parent().child('questionIds').child(newData.parent().child('index').val() + '').val() === newData.val()" },
+          "startedAt": { ".validate": "newData.isNumber() && newData.val() <= now" },
+          "$other": { ".validate": false }
+        },
+        "$other": { ".validate": false }
+      }
+    },
+
+    "roomCodes": {
+      "$code": {
+        ".read": "auth != null",
+        ".write": "auth != null && ((!data.exists() && newData.parent().parent().child('rooms').child(newData.val() + '').child('hostUid').val() === auth.uid) || (data.exists() && !newData.exists() && root.child('rooms').child(data.val() + '').child('hostUid').val() === auth.uid))",
+        ".validate": "newData.isString() && $code.matches(/^[A-Z0-9]{6}$/) && newData.parent().parent().child('rooms').child(newData.val()).child('code').val() === $code"
+      }
+    },
+
+    "roomPlayers": {
+      "$roomId": {
+        ".read": "auth != null && root.child('rooms').child($roomId).exists()",
+        "$uid": {
+          ".write": "auth != null && root.child('rooms').child($roomId).exists() && (auth.uid === $uid || root.child('rooms').child($roomId).child('hostUid').val() === auth.uid || root.child('admins').child(auth.uid).val() === true)",
+          ".validate": "newData.hasChildren(['name', 'score', 'joinedAt']) && (data.exists() || root.child('rooms').child($roomId).child('status').val() === 'waiting')",
+          "name": { ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 20" },
+          "score": { ".validate": "newData.isNumber() && ((!data.exists() && newData.val() === 0) || newData.val() === data.val() || root.child('admins').child(auth.uid).val() === true)" },
+          "joinedAt": { ".validate": "(!data.exists() && newData.val() === now) || newData.val() === data.val()" },
+          "online": { ".validate": "newData.isBoolean()" },
+          "$other": { ".validate": false }
+        }
+      }
+    },
+
+    "roomAnswers": {
+      "$roomId": {
+        ".read": "auth != null && (root.child('rooms').child($roomId).child('hostUid').val() === auth.uid || root.child('admins').child(auth.uid).val() === true)",
+        "$questionId": {
+          "$uid": {
+            ".read": "auth != null && auth.uid === $uid",
+            ".write": "auth != null && auth.uid === $uid && !data.exists() && root.child('roomPlayers').child($roomId).child($uid).exists() && root.child('rooms').child($roomId).child('status').val() === 'playing' && root.child('rooms').child($roomId).child('current').child('questionId').val() === $questionId && now <= root.child('rooms').child($roomId).child('current').child('startedAt').val() + root.child('rooms').child($roomId).child('settings').child('timePerQuestionSec').val() * 1000 + 2000",
+            ".validate": "newData.hasChildren(['choice', 'answeredAt'])",
+            "choice": { ".validate": "newData.isNumber() && (newData.val() === 0 || newData.val() === 1 || newData.val() === 2 || newData.val() === 3)" },
+            "answeredAt": { ".validate": "newData.val() === now" },
+            "$other": { ".validate": false }
+          }
+        }
+      }
+    }
+  }
+}
