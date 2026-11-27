@@ -20,7 +20,8 @@ const firebaseConfig = {
   appId: '1:369449051904:web:2767c61d5cb272015375e5',
 };
 
-const NAMES = ['علي', 'زينب', 'حسين', 'مريم'];
+// Names can be changed with NAMES="a,b,c" in the environment.
+const NAMES = (process.env.NAMES || 'علي,زينب,حسين,مريم').split(',').map((n) => n.trim()).filter(Boolean);
 const [pin, gapArg = '3', onlineArg = '20'] = process.argv.slice(2);
 if (!/^\d{6}$/.test(pin || '')) {
   console.error('usage: node scripts/demo-players.mjs <6-digit PIN> [secondsBetweenPlayers] [secondsOnline]');
