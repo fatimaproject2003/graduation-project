@@ -98,21 +98,41 @@ async function createRoom() {
   }
 }
 
+// Cards are kept per player and updated in place, so only a newly joined
+// player animates in; existing cards just change name or online state.
+const cards = new Map();
+
+function createCard(uid) {
+  const li = document.createElement('li');
+  li.className = 'player';
+  li.innerHTML = `<span class="avatar" style="background:${colorFor(uid)}"></span>
+    <span class="name"></span><span class="dot"></span>`;
+  return li;
+}
+
 function renderPlayers(players) {
   const list = Object.entries(players || {})
     .sort((a, b) => (a[1].joinedAt || 0) - (b[1].joinedAt || 0));
-  const online = list.filter(([, p]) => p.online !== false).length;
+  const container = $('players');
+
+  for (const [uid, li] of cards) {
+    if (!players?.[uid]) { li.remove(); cards.delete(uid); }
+  }
+  list.forEach(([uid, p], index) => {
+    let li = cards.get(uid);
+    if (!li) { li = createCard(uid); cards.set(uid, li); }
+    const offline = p.online === false;
+    li.classList.toggle('is-offline', offline);
+    li.querySelector('.avatar').textContent = (p.name || '?').trim().charAt(0);
+    li.querySelector('.name').textContent = p.name || '';
+    li.querySelector('.dot').title = offline ? 'غير متصل' : 'متصل';
+    // Move only when out of place: re-inserting a card would replay its animation.
+    if (container.children[index] !== li) container.insertBefore(li, container.children[index] || null);
+  });
 
   $('playerCount').textContent = String(list.length);
   $('empty').hidden = list.length > 0;
-  $('players').innerHTML = list.map(([uid, p]) => `
-    <li class="player${p.online === false ? ' is-offline' : ''}" data-uid="${escapeText(uid)}">
-      <span class="avatar" style="background:${colorFor(uid)}">${escapeText((p.name || '?').trim().charAt(0))}</span>
-      <span class="name">${escapeText(p.name || '')}</span>
-      <span class="dot" title="${p.online === false ? 'غير متصل' : 'متصل'}"></span>
-    </li>`).join('');
   document.title = `شاشة المضيف (${list.length})`;
-  return online;
 }
 
 async function openLobby(roomId) {
