@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>انضمام للعبة</title>
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">انضمام للعبة</div>
+    <div id="conn" class="conn">جارٍ الاتصال…</div>
+  </header>
+
+  <main>
+    <section id="loading" class="center">جارٍ الاتصال…</section>
+
+    <form id="joinForm" class="card join-card" hidden>
+      <h1>ادخل رمز الغرفة</h1>
+      <label>رمز الغرفة (PIN)
+        <input id="pinInput" class="pin-input ltr" inputmode="numeric" autocomplete="off"
+               maxlength="6" pattern="[0-9]{6}" placeholder="000000" required>
+      </label>
+      <label>اسمك
+        <input id="nameInput" maxlength="20" autocomplete="nickname" placeholder="مثلاً: سارة" required>
+      </label>
+      <button id="joinButton" class="btn primary" type="submit">انضمام</button>
+      <p id="joinError" class="error" hidden></p>
+    </form>
+
+    <section id="waiting" class="card waiting" hidden>
+      <p class="muted">أنت في الغرفة</p>
+      <p class="big ltr" id="waitPin"></p>
+      <p>مرحباً <strong id="waitName"></strong></p>
+      <div class="spinner" aria-hidden="true"></div>
+      <p id="waitStatus">بانتظار المضيف ليبدأ اللعبة…</p>
+      <p class="muted">عدد اللاعبين في الغرفة: <strong id="waitCount">0</strong></p>
+      <button id="leaveButton" class="btn" type="button">مغادرة الغرفة</button>
+    </section>
+  </main>
+
+  <script type="module" src="/js/join.js"></script>
+</body>
+</html>

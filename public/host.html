@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>شاشة المضيف</title>
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">شاشة المضيف
+      <small>Real-Time Cloud-Native Multiplayer Quiz Platform</small>
+    </div>
+    <div id="conn" class="conn">جارٍ الاتصال…</div>
+  </header>
+
+  <main>
+    <section id="loading" class="center">جارٍ الاتصال بقاعدة البيانات…</section>
+
+    <section id="setup" class="card" hidden>
+      <h1>إنشاء غرفة جديدة</h1>
+      <label>التصنيف
+        <select id="category"></select>
+      </label>
+      <label>عدد الأسئلة
+        <select id="questionCount">
+          <option value="5" selected>5 أسئلة</option>
+          <option value="10">10 أسئلة</option>
+          <option value="20">20 سؤالاً</option>
+        </select>
+      </label>
+      <label>وقت كل سؤال
+        <select id="timePerQuestion">
+          <option value="15">15 ثانية</option>
+          <option value="20" selected>20 ثانية</option>
+          <option value="30">30 ثانية</option>
+        </select>
+      </label>
+      <button id="create" class="btn primary">إنشاء الغرفة</button>
+      <p id="setupError" class="error" hidden></p>
+    </section>
+
+    <section id="lobby" class="lobby" hidden>
+      <div class="join-panel">
+        <div>
+          <p class="muted">ادخل من الهاتف إلى</p>
+          <p class="join-url ltr" id="joinUrl"></p>
+          <p class="muted">رمز الغرفة (PIN)</p>
+          <p class="pin ltr" id="pin"></p>
+        </div>
+        <div>
+          <div class="qr" id="qr" role="img" aria-label="رمز QR للانضمام"></div>
+          <p class="qr-caption muted">أو امسح الرمز بالكاميرا</p>
+        </div>
+      </div>
+
+      <div class="players-head">
+        <h2>اللاعبون المنضمون<span class="badge" id="playerCount">0</span></h2>
+        <p class="muted" id="roomInfo"></p>
+      </div>
+      <ul id="players" class="players" aria-live="polite"></ul>
+      <p id="empty" class="empty">بانتظار انضمام اللاعبين… امسح رمز QR أو أدخل الـ PIN</p>
+
+      <div class="lobby-actions">
+        <a href="/host" class="btn">غرفة جديدة</a>
+      </div>
+    </section>
+
+    <section id="failure" class="card" hidden>
+      <h1>تعذّر فتح الغرفة</h1>
+      <p id="failureText" class="error"></p>
+      <a href="/host" class="btn">إنشاء غرفة جديدة</a>
+    </section>
+  </main>
+
+  <script type="module" src="/js/host.js"></script>
+</body>
+</html>

@@ -239,3 +239,50 @@ describe('Answers', () => {
     await assertSucceeds(db('host').ref('roomAnswers/room1').once('value'));
   });
 });
+
+describe('Week 3: host screen and joining', () => {
+  const newRoom = (host, pin, roomId) => ({
+    [`rooms/${roomId}`]: {
+      code: pin, hostUid: host, status: 'waiting', createdAt: NOW,
+      settings: { categoryId: 'cloud', questionCount: 2, timePerQuestionSec: 20 },
+      questionIds: ['q01', 'q02'],
+    },
+    [`roomCodes/${pin}`]: roomId,
+  });
+
+  test('the host can pick questions of one category (indexed query)', async () => {
+    await assertSucceeds(db('host').ref('questions').orderByChild('categoryId').equalTo('cloud').once('value'));
+  });
+
+  test('the host creates a room with a 6-digit PIN in one write', async () => {
+    await assertSucceeds(db('host2').ref().update(newRoom('host2', '482913', 'roomA')));
+  });
+
+  test('a PIN that is already taken cannot be reused by another host', async () => {
+    await assertSucceeds(db('host2').ref().update(newRoom('host2', '555111', 'roomB')));
+    // a different host, a different room, the same PIN
+    await assertFails(db('host3').ref().update(newRoom('host3', '555111', 'roomC')));
+    // the same host can still create that room with a fresh PIN
+    await assertSucceeds(db('host3').ref().update(newRoom('host3', '555112', 'roomC')));
+  });
+
+  test('the host and other players can see the players list, visitors cannot', async () => {
+    await assertSucceeds(db('host').ref('roomPlayers/room1').once('value'));
+    await assertSucceeds(db('player1').ref('roomPlayers/room1').once('value'));
+    await assertFails(db().ref('roomPlayers/room1').once('value'));
+  });
+
+  test('a returning player can update their name and come back online', async () => {
+    await assertSucceeds(db('player1').ref('roomPlayers/room1/player1').update({ name: 'Ali K', online: true }));
+  });
+
+  test('presence: the player can be marked offline, but only with true/false', async () => {
+    await assertSucceeds(db('player1').ref('roomPlayers/room1/player1').update({ online: false }));
+    await assertFails(db('player1').ref('roomPlayers/room1/player1/online').set('maybe'));
+  });
+
+  test('a player can leave the room but cannot remove someone else', async () => {
+    await assertFails(db('player2').ref('roomPlayers/room1/player1').remove());
+    await assertSucceeds(db('player1').ref('roomPlayers/room1/player1').remove());
+  });
+});
