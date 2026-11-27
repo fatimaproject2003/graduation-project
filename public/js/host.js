@@ -7,7 +7,7 @@ import {
 } from './firebase.js';
 
 const $ = (id) => document.getElementById(id);
-const AVATAR_COLORS = ['#4b3fd6', '#d6336c', '#0c8599', '#e8590c', '#2f9e44', '#7048e8', '#c2255c', '#1971c2'];
+const AVATAR_COLORS = ['#0a78bf', '#127a2f', '#c9a91f', '#075a91', '#2f9e4a', '#b8860b', '#053e66', '#1f8f5f'];
 
 let user;
 let categories = {};

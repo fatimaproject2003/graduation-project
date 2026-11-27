@@ -5,145 +5,66 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Real-Time Cloud-Native Multiplayer Quiz Platform</title>
   <meta name="description" content="مشروع تخرج: فاطمة عبدالله عبدالعالي، بإشراف د. وفاء شاكر محمد">
-  <style>
-    :root {
-      --bg: #f6f7f9;
-      --card: #ffffff;
-      --text: #1d2330;
-      --muted: #5c6577;
-      --value: #2c4a7c;
-      --accent: #f57c00;
-      --ok: #1e8e3e;
-      --border: #e3e6eb;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #12151b;
-        --card: #1b2029;
-        --text: #e8ebf0;
-        --muted: #9aa3b2;
-        --value: #8fb3ec;
-        --accent: #ffa040;
-        --ok: #4cc26b;
-        --border: #2a313d;
-      }
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 24px 16px;
-      background: var(--bg);
-      color: var(--text);
-      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
-      line-height: 1.7;
-    }
-    main {
-      width: 100%;
-      max-width: 640px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px 28px;
-    }
-    .kicker {
-      margin: 0 0 8px;
-      color: var(--muted);
-      font-size: 0.95rem;
-      text-align: center;
-    }
-    h1 {
-      margin: 0 0 28px;
-      font-size: 1.5rem;
-      line-height: 1.4;
-      text-align: center;
-      direction: ltr;
-      text-wrap: balance;
-    }
-    .info {
-      margin: 0 0 28px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border);
-      text-align: center;
-    }
-    .info p { margin: 0 0 8px; font-size: 1.1rem; }
-    .info .label { color: var(--muted); }
-    .info .value { color: var(--value); font-weight: 700; }
-    h2 { margin: 0 0 4px; font-size: 1.05rem; }
-    h2.week { margin-top: 20px; }
-    .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 0 0 28px; }
-    .action {
-      flex: 1 1 180px; text-align: center; padding: 12px 18px; border-radius: 10px; font-weight: 700;
-      text-decoration: none; border: 1px solid var(--border); color: var(--text);
-    }
-    .action.primary { background: var(--value); border-color: var(--value); color: #fff; }
-    ul { list-style: none; padding: 0; margin: 0; }
-    li {
-      position: relative;
-      padding: 8px 26px 8px 0;
-      font-size: 0.95rem;
-    }
-    li::before {
-      content: "✔";
-      position: absolute;
-      right: 0;
-      top: 8px;
-      color: var(--ok);
-      font-weight: 700;
-    }
-    code {
-      direction: ltr;
-      unicode-bidi: embed;
-      font-family: ui-monospace, Menlo, monospace;
-      font-size: 0.9em;
-      color: var(--accent);
-    }
-    footer { margin-top: 20px; color: var(--muted); font-size: 0.85rem; text-align: center; }
-  </style>
+  <link rel="icon" href="/img/college-logo.webp" type="image/webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="/css/app.css">
 </head>
-<body>
+<body class="home">
   <main>
-    <p class="kicker">مشروع تخرج</p>
-    <h1>Real-Time Cloud-Native Multiplayer Quiz Platform Utilizing Serverless Architecture and Auto-Scaling</h1>
+    <div class="card home-card">
+      <div class="hero">
+        <img src="/img/college-logo.webp" alt="شعار كلية علوم الحاسوب وتكنولوجيا المعلومات - جامعة كربلاء" width="120" height="120">
+        <p class="kicker">مشروع تخرج</p>
+        <h1>Real-Time Cloud-Native Multiplayer Quiz Platform Utilizing Serverless Architecture and Auto-Scaling</h1>
+      </div>
 
-    <div class="info">
-      <p><span class="label">إعداد الطالبة :</span> <span class="value">فاطمة عبدالله عبدالعالي</span></p>
-      <p><span class="label">المرحلة :</span> <span class="value">الرابعة</span></p>
-      <p><span class="label">بإشراف :</span> <span class="value">د. وفاء شاكر محمد</span></p>
+      <div class="people">
+        <p><span class="label">إعداد الطالبة :</span> <span class="value">فاطمة عبدالله عبدالعالي</span></p>
+        <p><span class="label">المرحلة :</span> <span class="value">الرابعة</span></p>
+        <p><span class="label">بإشراف :</span> <span class="value">د. وفاء شاكر محمد</span></p>
+      </div>
+
+      <nav class="actions">
+        <a class="btn primary" href="/host">شاشة المضيف</a>
+        <a class="btn gold" href="/join">انضمام كلاعب</a>
+      </nav>
+
+      <section class="week">
+        <h2><span class="num">1</span>الأسبوع الأول: البيئة والسحابة</h2>
+        <ul>
+          <li>تم تثبيت Node.js و Firebase CLI</li>
+          <li>تم إنشاء مشروع Firebase: <code>graduation-project-a0d1e</code></li>
+          <li>المستودع على GitHub مرتبط بـ Firebase عبر GitHub Actions</li>
+          <li>أي تحديث يُرفع إلى فرع <code>main</code> يُنشر تلقائياً على هذه الصفحة</li>
+        </ul>
+      </section>
+
+      <section class="week">
+        <h2><span class="num">2</span>الأسبوع الثاني: قاعدة البيانات والأمان</h2>
+        <ul>
+          <li>تصميم شجرة JSON للتصنيفات والأسئلة والغرف واللاعبين والإجابات</li>
+          <li>قاعدة بيانات لحظية (Realtime Database) في بلجيكا <code>europe-west1</code></li>
+          <li>قواعد أمان <code>database.rules.json</code>: لا قراءة ولا كتابة بدون تسجيل دخول، والأجوبة الصحيحة مخفية عن اللاعبين</li>
+          <li>بنك أسئلة تجريبي: 20 سؤالاً في 4 تصنيفات</li>
+          <li>27 اختبار أمان ناجح على محاكي Firebase</li>
+        </ul>
+      </section>
+
+      <section class="week">
+        <h2><span class="num">3</span>الأسبوع الثالث: شاشة المضيف</h2>
+        <ul>
+          <li>شاشة عرض كبرى تنشئ غرفة برمز PIN من 6 أرقام ورمز QR للانضمام</li>
+          <li>صفحة انضمام للاعبين من الهاتف بالرمز أو بمسح QR</li>
+          <li>قائمة اللاعبين المنضمين تظهر فوراً عبر اتصال WebSocket مع Realtime Database</li>
+          <li>حالة اتصال كل لاعب (متصل / غير متصل) تتحدث تلقائياً</li>
+        </ul>
+      </section>
+
+      <footer>هذه النسخة نُشرت تلقائياً من GitHub Actions</footer>
     </div>
-
-    <nav class="actions">
-      <a class="action primary" href="/host">شاشة المضيف</a>
-      <a class="action" href="/join">انضمام كلاعب</a>
-    </nav>
-
-    <h2>الأسبوع الأول: البيئة والسحابة</h2>
-    <ul>
-      <li>تم تثبيت Node.js و Firebase CLI</li>
-      <li>تم إنشاء مشروع Firebase: <code>graduation-project-a0d1e</code></li>
-      <li>المستودع على GitHub مرتبط بـ Firebase عبر GitHub Actions</li>
-      <li>أي تحديث يُرفع إلى فرع <code>main</code> يُنشر تلقائياً على هذه الصفحة</li>
-    </ul>
-
-    <h2 class="week">الأسبوع الثاني: قاعدة البيانات والأمان</h2>
-    <ul>
-      <li>تصميم شجرة JSON للتصنيفات والأسئلة والغرف واللاعبين والإجابات</li>
-      <li>قاعدة بيانات لحظية (Realtime Database) في بلجيكا <code>europe-west1</code></li>
-      <li>قواعد أمان <code>database.rules.json</code>: لا قراءة ولا كتابة بدون تسجيل دخول، والأجوبة الصحيحة مخفية عن اللاعبين</li>
-      <li>بنك أسئلة تجريبي: 20 سؤالاً في 4 تصنيفات</li>
-      <li>27 اختبار أمان ناجح على محاكي Firebase</li>
-    </ul>
-
-    <h2 class="week">الأسبوع الثالث: شاشة المضيف</h2>
-    <ul>
-      <li>شاشة عرض كبرى تنشئ غرفة برمز PIN من 6 أرقام ورمز QR للانضمام</li>
-      <li>صفحة انضمام للاعبين من الهاتف بالرمز أو بمسح QR</li>
-      <li>قائمة اللاعبين المنضمين تظهر فوراً عبر اتصال WebSocket مع Realtime Database</li>
-      <li>حالة اتصال كل لاعب (متصل / غير متصل) تتحدث تلقائياً</li>
-    </ul>
-    <footer>هذه النسخة نُشرت تلقائياً من GitHub Actions</footer>
   </main>
+  <div class="stripes" aria-hidden="true"></div>
 </body>
 </html>
