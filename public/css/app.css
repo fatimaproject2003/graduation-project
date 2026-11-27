@@ -275,4 +275,5 @@ code {
 .site-footer strong { color: var(--blue-dark); font-weight: 800; }
 body.host .site-footer { background: rgba(5, 40, 70, 0.55); border-top-color: rgba(255, 255, 255, 0.15); color: rgba(255, 255, 255, 0.8); }
 body.host .site-footer strong { color: #fff; }
-.site-footer .part { display: block; }
+.site-footer .part { display: inline-block; white-space: nowrap; }
+.site-footer .sep { color: var(--gold); margin: 0 14px; font-weight: 800; }
