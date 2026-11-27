@@ -277,3 +277,7 @@ body.host .site-footer { background: rgba(5, 40, 70, 0.55); border-top-color: rg
 body.host .site-footer strong { color: #fff; }
 .site-footer .part { display: inline-block; white-space: nowrap; }
 .site-footer .sep { color: var(--gold); margin: 0 14px; font-weight: 800; }
+@media (max-width: 560px) {
+  .site-footer .sep { display: none; }
+  .site-footer .part { display: block; }
+}
