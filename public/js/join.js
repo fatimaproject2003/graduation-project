@@ -1,6 +1,6 @@
 // Player page: join a room with its PIN (typed, or from the host's QR code).
 import {
-  db, signIn, watchConnection,
+  db, signIn, watchConnection, withFreshAuth, isPermissionError,
   ref, get, set, update, remove, onValue, onDisconnect, serverTimestamp,
 } from './firebase.js';
 
@@ -35,15 +35,19 @@ async function findRoom(pin) {
 }
 
 async function join(pin, name) {
-  const { roomId, room } = await findRoom(pin);
-  const pRef = ref(db, `roomPlayers/${roomId}/${user.uid}`);
-  const existing = await get(pRef);
-  if (existing.exists()) {
-    await update(pRef, { name, online: true }); // coming back to the same room
-  } else {
-    if (room.status !== 'waiting') throw new Error('بدأت اللعبة في هذه الغرفة، لا يمكن الانضمام الآن.');
-    await set(pRef, { name, score: 0, joinedAt: serverTimestamp(), online: true });
-  }
+  const { roomId, pRef } = await withFreshAuth(async (signedIn) => {
+    user = signedIn;
+    const { roomId: id, room } = await findRoom(pin);
+    const playerNode = ref(db, `roomPlayers/${id}/${signedIn.uid}`);
+    const existing = await get(playerNode);
+    if (existing.exists()) {
+      await update(playerNode, { name, online: true }); // coming back to the same room
+    } else {
+      if (room.status !== 'waiting') throw new Error('بدأت اللعبة في هذه الغرفة، لا يمكن الانضمام الآن.');
+      await set(playerNode, { name, score: 0, joinedAt: serverTimestamp(), online: true });
+    }
+    return { roomId: id, pRef: playerNode };
+  });
   playerRef = pRef;
   sessionStorage.setItem(STORE_KEY, JSON.stringify({ pin, name }));
   enterWaiting(roomId, pin, name);
@@ -115,7 +119,9 @@ async function main() {
       await join(pin, name);
     } catch (err) {
       console.error(err);
-      showError(err.message.includes('PERMISSION_DENIED') ? 'لا يمكن الانضمام إلى هذه الغرفة.' : err.message);
+      showError(isPermissionError(err)
+        ? 'تعذّر الانضمام إلى الغرفة. تأكد من الاتصال بالإنترنت ثم حاول مرة أخرى.'
+        : err.message);
     } finally {
       $('joinButton').disabled = false;
     }

@@ -2,7 +2,7 @@
 // then shows the players who join, live, over the Realtime Database WebSocket.
 import qrcode from '../vendor/qrcode.mjs';
 import {
-  db, signIn, watchConnection, escapeText,
+  db, signIn, watchConnection, escapeText, withFreshAuth, isPermissionError,
   ref, get, update, push, query, orderByChild, equalTo, onValue, serverTimestamp,
 } from './firebase.js';
 
@@ -59,39 +59,43 @@ async function createRoom() {
     const wanted = Number($('questionCount').value);
     const timePerQuestionSec = Number($('timePerQuestion').value);
 
-    const qSnap = await get(query(ref(db, 'questions'), orderByChild('categoryId'), equalTo(categoryId)));
-    const questionIds = shuffle(Object.keys(qSnap.val() || {})).slice(0, wanted);
-    if (questionIds.length === 0) throw new Error('لا توجد أسئلة في هذا التصنيف.');
+    const roomId = await withFreshAuth(async (signedIn) => {
+      user = signedIn;
+      const qSnap = await get(query(ref(db, 'questions'), orderByChild('categoryId'), equalTo(categoryId)));
+      const questionIds = shuffle(Object.keys(qSnap.val() || {})).slice(0, wanted);
+      if (questionIds.length === 0) throw new Error('لا توجد أسئلة في هذا التصنيف.');
 
-    const roomId = push(ref(db, 'rooms')).key;
-    let pin;
-    // Room and PIN are written together; if the PIN is already taken the rules
-    // reject the whole write, so try again with a new PIN.
-    for (let attempt = 1; ; attempt += 1) {
-      pin = randomPin();
-      try {
-        await update(ref(db), {
-          [`rooms/${roomId}`]: {
-            code: pin,
-            hostUid: user.uid,
-            status: 'waiting',
-            createdAt: serverTimestamp(),
-            settings: { categoryId, questionCount: questionIds.length, timePerQuestionSec },
-            questionIds,
-          },
-          [`roomCodes/${pin}`]: roomId,
-        });
-        break;
-      } catch (err) {
-        if (attempt >= 5) throw err;
+      const id = push(ref(db, 'rooms')).key;
+      // Room and PIN are written together; if the PIN is already taken the rules
+      // reject the whole write, so try again with a new PIN.
+      for (let attempt = 1; ; attempt += 1) {
+        const pin = randomPin();
+        try {
+          await update(ref(db), {
+            [`rooms/${id}`]: {
+              code: pin,
+              hostUid: signedIn.uid,
+              status: 'waiting',
+              createdAt: serverTimestamp(),
+              settings: { categoryId, questionCount: questionIds.length, timePerQuestionSec },
+              questionIds,
+            },
+            [`roomCodes/${pin}`]: id,
+          });
+          return id;
+        } catch (err) {
+          if (attempt >= 5) throw err;
+        }
       }
-    }
+    });
 
     history.replaceState(null, '', `/host?room=${roomId}`);
     openLobby(roomId);
   } catch (err) {
     console.error(err);
-    $('setupError').textContent = `تعذّر إنشاء الغرفة: ${err.message}`;
+    $('setupError').textContent = isPermissionError(err)
+      ? 'تعذّر إنشاء الغرفة. تأكد من الاتصال بالإنترنت ثم حاول مرة أخرى.'
+      : `تعذّر إنشاء الغرفة: ${err.message}`;
     $('setupError').hidden = false;
   } finally {
     button.disabled = false;

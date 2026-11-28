@@ -33,6 +33,36 @@ export async function signIn() {
   return auth.currentUser;
 }
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// Reads denied by the rules fail with "Permission denied"; writes with "PERMISSION_DENIED: …".
+export function isPermissionError(err) {
+  return /permission[_ ]denied/i.test(String(err?.code || '') + ' ' + String(err?.message || ''));
+}
+
+// The sign-in token lasts one hour. A page left open on a locked phone may not have
+// refreshed it yet, so the database briefly treats the user as signed out. Refresh the
+// token first, and if the rules still say "denied", force a new token and try once more.
+export async function withFreshAuth(action) {
+  const user = await signIn();
+  await user.getIdToken();
+  try {
+    return await action(user);
+  } catch (err) {
+    if (!isPermissionError(err)) throw err;
+    await user.getIdToken(true);
+    await sleep(1500); // give the database connection time to receive the new token
+    return action(user);
+  }
+}
+
+// Refresh the token as soon as a backgrounded tab (a phone waking up) becomes visible again.
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && auth.currentUser) {
+    auth.currentUser.getIdToken().catch(() => {});
+  }
+});
+
 // Shows the live WebSocket connection state in an element.
 export function watchConnection(el) {
   onValue(ref(db, '.info/connected'), (snap) => {
